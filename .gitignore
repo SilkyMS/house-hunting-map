@@ -1,3 +1,5 @@
 __pycache__/
 *.png
 iframe_test_page.html
+live_iframe_page.html
+live_test.py

@@ -14,6 +14,8 @@ html,body{margin:0;height:100%;background:#f7f5f0;font-family:"DejaVu Sans",Verd
 .pop h3{margin:0 0 4px;font-size:14px}.pop .c{color:#777;font-size:11px;margin-bottom:6px}.pop td{vertical-align:top;padding:2px 4px;font-size:12px}.pop td:first-child{font-weight:bold;white-space:nowrap}
 .legend i{display:inline-block;width:12px;height:12px;margin-right:5px;vertical-align:-2px;border:1px solid #7a6a20}
 .src{font-size:10px;color:#777;margin-top:4px}
+.hpin{background:none;border:none}.pop a{color:#b23a0a;font-weight:bold}
+.leaflet-control-layers{font-size:13px}
 </style></head><body><div id="map"></div>
 <script src="assets/leaflet/leaflet.js"></script>
 <script>
@@ -51,6 +53,18 @@ Promise.all(['states','counties','water','towns','points','manhattan'].map(get))
 });
 const ctl=L.control({position:'topright'});ctl.onAdd=()=>{const d=L.DomUtil.create('div','panel');
  d.innerHTML=`<h1>School towns near Manhattan</h1><label>Zoom to county: <select id="county"><option value="">All counties</option></select></label>
- <div class="legend" style="margin-top:6px"><i style="background:${C.acc}"></i>Featured school town (click for details)<br><i style="background:${C.county};border-color:#6d7bb5"></i>Featured county</div>
+ <div class="legend" style="margin-top:6px"><i style="background:${C.acc}"></i>Featured school town (click for details)<br><i style="background:${C.county};border-color:#6d7bb5"></i>Featured county<br><i style="background:#b23a0a;border-color:#fff"></i>Saved home: Personal list<br><i style="background:#f08a4b;border-color:#fff"></i>Saved home: Shared list</div>
  <div class="src">Data: research.md, Niche 2026. Verify before deciding.</div>`;L.DomEvent.disableClickPropagation(d);return d};ctl.addTo(map);
+
+const HC={Personal:'#b23a0a',Shared:'#f08a4b'};
+const pin=c=>L.divIcon({className:'hpin',iconSize:[22,26],iconAnchor:[11,25],popupAnchor:[0,-22],
+ html:`<svg width="22" height="26" viewBox="0 0 22 26"><path d="M11 25 L3 15 V9 L11 2 L19 9 V15 Z" fill="${c}" stroke="#fff" stroke-width="1.6"/><rect x="8.5" y="11" width="5" height="5" fill="#fff"/></svg>`});
+function hpop(p){const u=/^https:\/\/www\.zillow\.com\//.test(p.url)?p.url:null;
+ return `<div class="pop"><h3>${esc(p.address)}</h3><div class="c">${esc(p.city)}, ${esc(p.state)} ${esc(p.zip)} | ${esc(p.list)} list</div><table>
+<tr><td>Price</td><td>${esc(p.price)}</td></tr><tr><td>Beds</td><td>${esc(p.beds)}</td></tr><tr><td>Baths</td><td>${esc(p.baths)}</td></tr><tr><td>Sq ft</td><td>${esc(p.sqft)}</td></tr></table>
+${u?`<a href="${esc(u)}" target="_blank" rel="noopener">View on Zillow</a>`:'Zillow link: not available'}</div>`}
+map.createPane('homes');map.getPane('homes').style.zIndex=650;
+get('homes').then(h=>{const g=L.geoJSON(h,{pointToLayer:(f,ll)=>L.marker(ll,{pane:'homes',icon:pin(HC[f.properties.list]||HC.Shared)}),
+ onEachFeature:(f,l)=>{l.bindPopup(hpop(f.properties),{maxWidth:300});l.bindTooltip(f.properties.address)}}).addTo(map);
+ window.homesLayer=g;L.control.layers(null,{'Saved homes':g},{collapsed:false,position:'topright'}).addTo(map);window.homesReady=true;});
 </script></body></html>
