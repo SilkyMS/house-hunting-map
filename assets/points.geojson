@@ -1,0 +1,14 @@
+{
+"type": "FeatureCollection",
+"name": "points",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"xy_coordinate_resolution": 1e-05,
+"features": [
+{ "type": "Feature", "properties": { "label": "Briarcliff Manor", "county": "ny-westchester", "cname": "Westchester County, New York", "district": "Briarcliff Manor UFSD", "niche": "#13 in NY [NicheNY]", "commute": "Harlem/Hudson area, rail time not fetched", "price": "not available", "cmed": "The 2025 median sale price was $753,350 [PFP]." }, "geometry": { "type": "Point", "coordinates": [ -73.83575, 41.14135 ] } },
+{ "type": "Feature", "properties": { "label": "Syosset", "county": "ny-nassau", "cname": "Nassau County, New York", "district": "Syosset CSD", "niche": "#1 in NY, #2 nationally [NicheNY]", "commute": "LIRR to Penn, roughly 50 to 60 min (estimate)", "price": "not available", "cmed": "The 2025 median was $805,000, up 5.9% [OneKey]." }, "geometry": { "type": "Point", "coordinates": [ -73.50073, 40.81699 ] } },
+{ "type": "Feature", "properties": { "label": "Jericho", "county": "ny-nassau", "cname": "Nassau County, New York", "district": "Jericho UFSD", "niche": "#4 in NY, #10 nationally", "commute": "not available", "price": "not available", "cmed": "The 2025 median was $805,000, up 5.9% [OneKey]." }, "geometry": { "type": "Point", "coordinates": [ -73.54161, 40.7862 ] } },
+{ "type": "Feature", "properties": { "label": "Roslyn", "county": "ny-nassau", "cname": "Nassau County, New York", "district": "Roslyn UFSD", "niche": "#2 in NY, #3 nationally [NicheNY]", "commute": "LIRR, roughly 40 to 45 min (estimate)", "price": "not available", "cmed": "The 2025 median was $805,000, up 5.9% [OneKey]." }, "geometry": { "type": "Point", "coordinates": [ -73.65114, 40.79933 ] } },
+{ "type": "Feature", "properties": { "label": "Great Neck", "county": "ny-nassau", "cname": "Nassau County, New York", "district": "Great Neck", "niche": "#6 [NicheNY]", "commute": "about 30 min on LIRR (estimate)", "price": "not available", "cmed": "The 2025 median was $805,000, up 5.9% [OneKey]." }, "geometry": { "type": "Point", "coordinates": [ -73.73112, 40.80288 ] } },
+{ "type": "Feature", "properties": { "label": "Manhasset", "county": "ny-nassau", "cname": "Nassau County, New York", "district": "Manhasset", "niche": "#7 [NicheNY]", "commute": "about 30 min on LIRR (estimate)", "price": "not available", "cmed": "The 2025 median was $805,000, up 5.9% [OneKey]." }, "geometry": { "type": "Point", "coordinates": [ -73.69709, 40.7878 ] } }
+]
+}
