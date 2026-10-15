@@ -61,7 +61,7 @@ const pin=c=>L.divIcon({className:'hpin',iconSize:[22,26],iconAnchor:[11,25],pop
  html:`<svg width="22" height="26" viewBox="0 0 22 26"><path d="M11 25 L3 15 V9 L11 2 L19 9 V15 Z" fill="${c}" stroke="#fff" stroke-width="1.6"/><rect x="8.5" y="11" width="5" height="5" fill="#fff"/></svg>`});
 function hpop(p){const u=/^https:\/\/www\.zillow\.com\//.test(p.url)?p.url:null;
  return `<div class="pop"><h3>${esc(p.address)}</h3><div class="c">${esc(p.city)}, ${esc(p.state)} ${esc(p.zip)} | ${esc(p.list)} list</div><table>
-<tr><td>Price</td><td>${esc(p.price)}</td></tr><tr><td>Beds</td><td>${esc(p.beds)}</td></tr><tr><td>Baths</td><td>${esc(p.baths)}</td></tr><tr><td>Sq ft</td><td>${esc(p.sqft)}</td></tr></table>
+<tr><td>Price</td><td>${esc(p.price)}${p.prev_price?` (was ${esc(p.prev_price)})`:''}</td></tr>${p.status?`<tr><td>Status</td><td>${esc(p.status)}</td></tr>`:''}<tr><td>Beds</td><td>${esc(p.beds)}</td></tr><tr><td>Baths</td><td>${esc(p.baths)}</td></tr><tr><td>Sq ft</td><td>${esc(p.sqft)}</td></tr></table>
 ${u?`<a href="${esc(u)}" target="_blank" rel="noopener">View on Zillow</a>`:'Zillow link: not available'}</div>`}
 map.createPane('homes');map.getPane('homes').style.zIndex=650;
 get('homes').then(h=>{const g=L.geoJSON(h,{pointToLayer:(f,ll)=>L.marker(ll,{pane:'homes',icon:pin(HC[f.properties.list]||HC.Shared)}),
