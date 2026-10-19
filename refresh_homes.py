@@ -1,7 +1,7 @@
-import csv,io,json,re,time,requests
+import csv,io,json,os,re,time,requests
 B='/workspace/house-hunting/'
-old=json.load(open(B+'homes_old_backup.geojson'))['features']
-new=list(csv.DictReader(open(B+'zillow_for_sale_new.csv')))
+old=json.load(open(os.environ.get('OLD',B+'homes_old_backup.geojson')))['features']
+new=list(csv.DictReader(open(os.environ.get('NEW',B+'zillow_for_sale_new.csv'))))
 zp=lambda u:(re.search(r'(\d+)_zpid',u or '') or [None,None])[1]
 na_=lambda a:re.sub(r'[^a-z0-9 ]','',a.lower().replace('-',' ')).split()
 def nk(a,z):
@@ -39,8 +39,8 @@ if todo:
                 got[i]=([round(float(j[0]['lon']),6),round(float(j[0]['lat']),6)],'nominatim')
         if i in got: p['geocoder']=got[i][1]; feats.append({'type':'Feature','geometry':{'type':'Point','coordinates':got[i][0]},'properties':p})
         else: fail.append(f"{p['list']}: {p['address']}, {p['city']}, {p['state']} {p['zip']}")
-json.dump({'type':'FeatureCollection','features':feats},open('assets/homes.geojson','w'))
-open('geocode_failures_refresh.txt','w').write('\n'.join(fail)+'\n')
+json.dump({'type':'FeatureCollection','features':feats},open(os.environ.get('OUT','assets/homes.geojson'),'w'))
+open(os.environ.get('FAILS','geocode_failures_refresh.txt'),'w').write('\n'.join(fail)+'\n')
 print('ADDED',[(p['address'],p['city'],p['price'],p['list'],p.get('geocoder')) for p in added])
 print('REMOVED',[(p['address'],p['city'],p['price'],p['list']) for p in removed])
 print('CHANGES',changes); import collections
